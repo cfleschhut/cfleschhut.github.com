@@ -3,11 +3,109 @@
 <head>
 <meta charset="utf-8">
 <title>Hello World</title>
+<style>
+
+body {
+	margin: 0;
+	padding: 20px 0;
+	font: 12px/1.5 monospace;
+	background: #fff;
+	color: #000;
+}
+
+h1 {
+	font-size: 24px;
+	margin: 0 0 20px 0;
+	text-align: center;
+}
+a {
+	color: purple;
+}
+
+div#container {
+	width: 520px;
+	margin: 0 auto;
+}
+
+ul#dailymile {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+ul#dailymile li {
+	margin: 0 0 20px 0;
+}
+
+ul#dailymile h3 {
+	font-size: 14px;
+	margin: 0;
+}
+ul#dailymile p {
+	margin: 0;
+	background: #eee;
+	color: yellow;
+	font-size: 12px;
+}
+ul#dailymile p span {
+	display: block;
+	padding: 5px 10px;
+	background: purple;
+}
+p#morelink {
+	text-align: center;
+}
+
+</style>
+<script>
+
+function toPaddedString(val) {
+	if(val < 10) { val = "0" + val; }
+	return val;
+}
+
+function dailymileCB(data) {
+	var ul = document.createElement("ul");
+	ul.setAttribute("id", "dailymile");
+
+	for(var i=0, len=data.entries.length; i<len; i++) {
+		if (data.entries[i].workout) {
+			var date = new Date(data.entries[i].created_at),
+				day = date.getDate(), month = date.getMonth() + 1, year = date.getFullYear(),
+				calendar = toPaddedString(day) + "." + toPaddedString(month) + ".";
+			var distanceValue = data.entries[i].workout.distance.value,
+				distanceUnits = data.entries[i].workout.distance.units,
+				distance = distanceValue + " " + distanceUnits;
+			var li = document.createElement("li");
+			var h3 = document.createElement("h3");
+			h3.appendChild(document.createTextNode(calendar));
+			var p = document.createElement("p");
+			var span = document.createElement("span");
+			p.appendChild(span);
+			span.appendChild(document.createTextNode(distanceValue.toFixed(1) + " km"));
+			span.style.width = (distanceValue.toFixed(1) * 10) + "px";
+			li.appendChild(h3);
+			li.appendChild(p);
+			ul.appendChild(li);
+		}
+	}
+
+	var container = document.getElementById("container");
+	container.appendChild(ul);
+	var link = document.createElement("p");
+	link.setAttribute("id", "morelink");
+	link.innerHTML = '<a href="http://www.dailymile.com/people/ChristianF">more</a>';
+	container.appendChild(link);
+}
+
+</script>
 </head>
 
 <body>
 
-<p>Yay!</p>
+<div id="container">
+	<h1>Yay!</h1>
+</div>
 
+<script src="http://api.dailymile.com/people/christianf/entries.json?callback=dailymileCB"></script>
 </body>
 </html>
