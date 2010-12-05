@@ -114,6 +114,8 @@ p.more a {
 	background: #e5e5e5;
 	background-image: -moz-linear-gradient(0 100% 90deg, #e5e5e5, #eee);
 	background-image: -webkit-gradient(linear, 0 100%, 0 0, from(#e5e5e5), to(#eee));
+	border: 1px solid #eee;
+	border-color: #eee #eee #e5e5e5 #eee;
 	-moz-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 	-webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
 	box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
@@ -155,7 +157,7 @@ function dailymileCB(data) {
 			var distanceValue = data.entries[i].workout.distance.value,
 				distanceUnits = data.entries[i].workout.distance.units,
 				distance = distanceValue + " " + distanceUnits;
-			var title = data.entries[i].workout.title;
+			var title = data.entries[i].workout.title || "Untitled Workout";
 			list.push('<li title="' + title + '">');
 			list.push('<h3>' + calendarDate + ' &middot; ' + title + '</h3>');
 			var fixedDist = distanceValue.toFixed(1);
@@ -180,6 +182,20 @@ function dailymileCB(data) {
 	morelink.push('</p>');
 	container.innerHTML += morelink.join("");
 }
+
+function getScript(url) {
+	var scripttag = document.createElement("script");
+	scripttag.setAttribute("type", "text/javascript");
+	scripttag.setAttribute("src", url);
+	document.getElementsByTagName("head")[0].appendChild(scripttag);
+}
+
+// window.onload = function() {
+// 
+// 	var username = "christianf";
+// 	getScript('http://api.dailymile.com/people/' + username + '/entries.json?callback=dailymileCB');
+// 
+// };
 
 </script>
 </head>
