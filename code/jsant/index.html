@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>JavaScript Anthology: Code Sandbox</title>
+<style>
+
+div#content {
+	width: 50px; height: 50px; background: #eee;
+	border: 5px solid yellow;
+}
+
+</style>
+<script type="text/javascript" src="lib.js"></script>
+<script>
+
+function changeBorder(element, to) {
+	element.style.borderColor = to;
+}
+
+function init() {
+	
+	var datePara = document.getElementById("date");
+	datePara.innerHTML = new Date().getDateString("%tag, %date. %monat %year");
+
+	var contentDiv = document.getElementById("content");
+	contentDiv.onmouseover = function() {
+		changeBorder(this, "red");
+	};
+	contentDiv.onmouseout = function() {
+		changeBorder(this, "");
+	};
+
+	var test = document.getElementById("testdiv");
+	var data = ["a", "b", "c"];
+	var html = [];
+	html.push("<ul>");
+	for(var i=0; i<data.length; i++) {
+		html.push("<li>" + i + ": " + data[i] + "</li>");
+	}
+	html.push("</ul>");
+	console.log(html);
+	test.innerHTML = html.join("");
+
+}
+
+addLoadListener(init);
+
+</script>
+</head>
+
+<body>
+
+<p id="date"></p>
+<div id="content"></div>
+<div id="testdiv"></div>
+
+</body>
+</html>
