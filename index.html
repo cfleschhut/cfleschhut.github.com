@@ -155,12 +155,18 @@ function dailymileCB(data) {
 			var distanceValue = data.entries[i].workout.distance.value,
 				distanceUnits = data.entries[i].workout.distance.units,
 				distance = distanceValue + " " + distanceUnits;
-			list.push('<li>');
-			list.push('<h3>' + calendarDate + '</h3>');
+			var title = data.entries[i].workout.title;
+			list.push('<li title="' + title + '">');
+			list.push('<h3>' + calendarDate + ' &middot; ' + title + '</h3>');
 			var fixedDist = distanceValue.toFixed(1);
 			var distStr = fixedDist + " km";
 			var barWidth = fixedDist * 10;
 			list.push('<p><span style="width: ' + barWidth + 'px"><em>' + distStr + '</em></span></p>');
+			// if (data.entries[i].geo) {
+			// 	var lat = data.entries[i].geo.coordinates[1];
+			// 	var lon = data.entries[i].geo.coordinates[0];
+			// 	list.push('<img src="http://maps.google.com/maps/api/staticmap?center=' + lat + ',' + lon + '&amp;zoom=14&amp;size=500x312&amp;maptype=hybrid&amp;markers=color:red|' + lat + ',' + lon + '&amp;sensor=false" alt="" />');
+			// }
 			list.push('</li>');
 		}
 	}

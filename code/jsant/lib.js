@@ -19,7 +19,7 @@ function addLoadListener(fn) {
 	}
 }
 
-/* NUMBERS */
+/* === NUMBERS === */
 
 // Rounding a Number to x Decimal Places
 function roundTo(base, precision) {
@@ -58,15 +58,17 @@ function getOrdinal(n) {
 }
 
 
-/* STRINGS */
-
-
-/* ARRAYS */
+/* === STRINGS === */
 
 
 
 
-/* DATES & TIME */
+/* === ARRAYS === */
+
+
+
+
+/* === DATES & TIME === */
 
 Date.prototype.getDateString = function(str) {
 	var dnames = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"],
