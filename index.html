@@ -154,7 +154,6 @@ function dailymileCB(data) {
 	list.push('<ul id="dailymile">');
 
 	for(var i=0, len=data.entries.length; i<len; i++) {
-		console.log(data.entries);
 		if (data.entries[i].workout) {
 			var date = new Date(data.entries[i].at.replace(/^(\d{4})-(\d{2})-(\d{2}).+$/, "$2/$3/$1")),
 				day = date.getDate(), month = date.getMonth() + 1, year = date.getFullYear(),
