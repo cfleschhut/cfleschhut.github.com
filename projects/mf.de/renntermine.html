@@ -70,7 +70,8 @@ div#calendar ul#calendar-topbar li a {
 div#calendar ul#calendar-topbar li a:hover {
 	color: #08c;
 }
-div#calendar ul#calendar-topbar li a.selected {
+div#calendar ul#calendar-topbar li.current a {
+	font-weight: bold;
 	background: #ccc;
 	background-image: -moz-linear-gradient(0 100% 90deg, #ccc, #ddd);
 	background-image: -webkit-gradient(linear, 0 100%, 0 0, from(#ccc), to(#ddd));
@@ -78,9 +79,14 @@ div#calendar ul#calendar-topbar li a.selected {
 	-webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.2);
 	box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.2);
 }
+div#calendar ul#calendar-topbar li.current a:hover {
+	color: #333;
+	cursor: default;
+}
 
 div#calendar div.calendar-months {
 	clear: both;
+	margin: 0 0 60px 0;
 }
 div#calendar div.calendar-months a {
 	color: #08c;
@@ -89,6 +95,7 @@ div#calendar div.calendar-months a:hover {
 	text-decoration: underline;
 }
 div#calendar div.calendar-months h3 {
+	clear: both;
 	border-bottom: 1px solid #ddd;
 }
 div#calendar div.calendar-months ul {
@@ -170,11 +177,22 @@ div#calendar div.calendar-months p.race-result {
 	color: #333;
 	margin: 0;
 	padding: 0px 0px 0px 20px;
-	background: url(img/icon_flag_red.png) no-repeat 0% 0%;
+	background: url(img/fugue-icons/gear.png) no-repeat 0% 0%;
 	cursor: default;
 }
+div#calendar div.calendar-months p.fin1st {
+	background-image: url(img/fugue-icons/medal-gold.png);
+}
+div#calendar div.calendar-months p.fin2nd {
+	background-image: url(img/fugue-icons/medal-silver.png);
+}
+div#calendar div.calendar-months p.fin3rd {
+	background-image: url(img/fugue-icons/medal-bronze.png);
+}
+div#calendar div.calendar-months p.medal {
+	font-weight: bold;
+}
 div#calendar div.calendar-months p.futurerace {
-	background-image: url(img/icon_flag_white.png);
 }
 
 </style>
@@ -202,20 +220,52 @@ function narrowDesc(paraElems, maxlen) {
 	});
 }
 
+var raceCal = {
+	init: function() {
+		var container = $("div#calendar");
+		var headline = container.find("h2").eq(0);
+		var schedules = container.find("div.calendar-months");
+		var years = schedules.find("h2");
+		var html = '<ul id="calendar-topbar">';
+		schedules.each(function(index, item) {
+			var year = years.eq(index).text();
+			html += '<li><a href="#schedule_' + year + '">' + year + '</a></li>';
+		});
+		html += '</ul>';
+		var topbar = $(html);
+		topbar.insertAfter(headline);
+		years.remove();
+		this.topbarNav(topbar, schedules);
+	},
+	topbarNav: function(nav, divs) {
+		nav.find("a").each(function(i, el) {
+			$(el).click(function() {
+				// console.log();
+				$(this).parent().addClass("current").siblings().removeClass("current");
+				// console.log(this.hash);
+				divs.hide().eq(i).fadeIn();
+				return false;
+			});
+		}).eq(0).click();
+	}
+};
+
 $(document).ready(function() {
 
-	var topbar = $("ul#calendar-topbar");
-	var topbarLinks = topbar.find("a");
-	topbarLinks.click(function() {
-		topbarLinks.removeClass("selected");
-		$(this).addClass("selected");
-		return false;
-	});
+	// var topbar = $("ul#calendar-topbar");
+	// var topbarLinks = topbar.find("a");
+	// topbarLinks.click(function() {
+	// 	topbarLinks.removeClass("selected");
+	// 	$(this).addClass("selected");
+	// 	return false;
+	// });
 	
 	$("div.calendar-months ul > li:nth-child(odd)").addClass("odd");
 	
 	//
-	narrowDesc($("p.race-desc"), 20);
+	narrowDesc($("p.race-desc"), 15);
+	
+	raceCal.init();
 
 });
 
@@ -233,17 +283,20 @@ $(document).ready(function() {
 		<div id="calendar">
 
 			<h2>Renntermine-Übersicht</h2>
-			<ul id="calendar-topbar">
-				<li><a href="#schedule_11" class="selected">2011</a></li>
+			<!-- <ul id="calendar-topbar">
+				<li class="current"><a href="#schedule_11">2011</a></li>
 				<li><a href="#schedule_10">2010</a></li>
 				<li><a href="#schedule_09">2009</a></li>
 				<li><a href="#schedule_08">2008</a></li>
 				<li><a href="#schedule_07">2007</a></li>
 				<li><a href="#schedule_06">2006</a></li>
 				<li><a href="#schedule_05">2005</a></li>
-			</ul>
+			</ul> -->
 
-			<div class="calendar-months">
+			<div class="calendar-months" id="schedule_2011">
+
+				<h2>2011</h2>
+
 				<h3>März</h3>
 				<ul>
 					<li>
@@ -269,7 +322,7 @@ $(document).ready(function() {
 						<h5 class="race-location">Ochtendung</h5>
 						<h6 class="race-title">Poisonbike-Cup #3 <a href="http://www.poisonbike-cup.de/">Url</a></h6>
 						<p class="race-desc">Der Poisonbike-Cup ist eine Mountainbike-Rennserie, die aus 5 verschiedenen Rennveranstaltungen mit 7 Einzelrennen und 9 unterteilten Klassen, Tageseinzelwertung und Gesamteinzelwertung besteht.</p>
-						<p class="race-result">1.</p>
+						<p class="race-result medal fin1st">1.</p>
 					</li>
 					<li>
 						<h4 class="race-date">17.&ndash;18.04.</h4>
@@ -294,25 +347,267 @@ $(document).ready(function() {
 						<h5 class="race-location">Houffalize, Belgien</h5>
 						<h6 class="race-title">Mountain Bike World Cup <a href="http://houffalize-worldcup.be/2010/">Url</a></h6>
 						<!-- <p class="race-desc"></p> -->
-						<p class="race-result futurerace">&ndash;</p>
+						<p class="race-result">83.</p>
 					</li>
 					<li>
 						<h4 class="race-date">15.&ndash;16.05.</h4>
 						<h5 class="race-location">Heubach</h5>
 						<h6 class="race-title">Bike the Rock <a href="http://www.biketherock.de/">Url</a></h6>
 						<!-- <p class="race-desc"></p> -->
-						<p class="race-result futurerace">&ndash;</p>
+						<p class="race-result">15.</p>
 					</li>
 					<li>
 						<h4 class="race-date">22.&ndash;23.05.</h4>
 						<h5 class="race-location">Offenburg</h5>
 						<h6 class="race-title">Mountain Bike World Cup <a href="http://www.worldcup-offenburg.de/">Url</a></h6>
 						<!-- <p class="race-desc"></p> -->
-						<p class="race-result futurerace">&ndash;</p>
+						<p class="race-result">100.</p>
+					</li>
+				</ul>
+				
+				<h3>Juni</h3>
+				<ul>
+					<li>
+						<h4 class="race-date">12.&ndash;13.06.</h4>
+						<h5 class="race-location">Albstadt</h5>
+						<h6 class="race-title">Albstadt MTB Classic <a href="http://www.albstadt-mtb-classic.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result medal fin1st">1.</p>
+					</li>
+					<li>
+						<h4 class="race-date">18.&ndash;20.06.</h4>
+						<h5 class="race-location">Kirchzarten</h5>
+						<h6 class="race-title">Black Forest ULTRA Bike Marathon <a href="http://www.ultra-bike.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result medal fin2nd">2.</p>
+					</li>
+				</ul>
+
+				<h3>Juli</h3>
+				<ul>
+					<li>
+						<h4 class="race-date">03.07.</h4>
+						<h5 class="race-location">Wetter (Ruhr)</h5>
+						<h6 class="race-title">Ruhrbike-Festival 2010 <a href="http://www.ruhrbike-festival.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result medal fin1st">1.</p>
+					</li>
+					<li>
+						<h4 class="race-date">17.&ndash;18.07.</h4>
+						<h5 class="race-location">Bad Salzdetfurth</h5>
+						<h6 class="race-title">Deutsche Meisterschaften 2010 MTB Cross-Country <a href="http://mtb.bad-salzdetfurth.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result medal fin3rd">3.</p>
+					</li>
+				</ul>
+				
+				<h3>August</h3>
+				
+				<h3>September</h3>
+
+			</div>
+
+			<div class="calendar-months" id="schedule_2010">
+
+				<h2>2010</h2>
+
+				<h3>April</h3>
+				<ul>
+					<li>
+						<h4 class="race-date">11.04.</h4>
+						<h5 class="race-location">Ochtendung</h5>
+						<h6 class="race-title">Poisonbike-Cup #3 <a href="http://www.poisonbike-cup.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result medal fin1st">1.</p>
+					</li>
+					<li>
+						<h4 class="race-date">17.&ndash;18.04.</h4>
+						<h5 class="race-location">Münsingen</h5>
+						<h6 class="race-title">Int. Frühjahrsklassiker in Münsingen <a href="http://www.mtb-cup.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result">8.</p>
+					</li>
+					<li>
+						<h4 class="race-date">24.&ndash;25.04.</h4>
+						<h5 class="race-location">Dalby Forest, UK</h5>
+						<h6 class="race-title">Mountain Bike World Cup <a href="http://new.britishcycling.org.uk/mtbworld-2010">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result">96.</p>
+					</li>
+				</ul>
+
+				<h3>Mai</h3>
+				<ul>
+					<li>
+						<h4 class="race-date">01.&ndash;02.05.</h4>
+						<h5 class="race-location">Houffalize, Belgien</h5>
+						<h6 class="race-title">Mountain Bike World Cup <a href="http://houffalize-worldcup.be/2010/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result">83.</p>
+					</li>
+					<li>
+						<h4 class="race-date">15.&ndash;16.05.</h4>
+						<h5 class="race-location">Heubach</h5>
+						<h6 class="race-title">Bike the Rock <a href="http://www.biketherock.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result">15.</p>
+					</li>
+					<li>
+						<h4 class="race-date">22.&ndash;23.05.</h4>
+						<h5 class="race-location">Offenburg</h5>
+						<h6 class="race-title">Mountain Bike World Cup <a href="http://www.worldcup-offenburg.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result">100.</p>
+					</li>
+				</ul>
+				
+				<h3>Juni</h3>
+				<ul>
+					<li>
+						<h4 class="race-date">12.&ndash;13.06.</h4>
+						<h5 class="race-location">Albstadt</h5>
+						<h6 class="race-title">Albstadt MTB Classic <a href="http://www.albstadt-mtb-classic.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result medal fin1st">1.</p>
+					</li>
+					<li>
+						<h4 class="race-date">18.&ndash;20.06.</h4>
+						<h5 class="race-location">Kirchzarten</h5>
+						<h6 class="race-title">Black Forest ULTRA Bike Marathon <a href="http://www.ultra-bike.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result medal fin2nd">2.</p>
+					</li>
+				</ul>
+
+				<h3>Juli</h3>
+				<ul>
+					<li>
+						<h4 class="race-date">03.07.</h4>
+						<h5 class="race-location">Wetter (Ruhr)</h5>
+						<h6 class="race-title">Ruhrbike-Festival 2010 <a href="http://www.ruhrbike-festival.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result medal fin1st">1.</p>
+					</li>
+					<li>
+						<h4 class="race-date">17.&ndash;18.07.</h4>
+						<h5 class="race-location">Bad Salzdetfurth</h5>
+						<h6 class="race-title">Deutsche Meisterschaften 2010 MTB Cross-Country <a href="http://mtb.bad-salzdetfurth.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result medal fin3rd">3.</p>
 					</li>
 				</ul>
 
 			</div>
+
+			<div class="calendar-months" id="schedule_2009">
+
+				<h2>2009</h2>
+
+				<h3>Mai</h3>
+				<ul>
+					<li>
+						<h4 class="race-date">01.&ndash;02.05.</h4>
+						<h5 class="race-location">Houffalize, Belgien</h5>
+						<h6 class="race-title">Mountain Bike World Cup <a href="http://houffalize-worldcup.be/2010/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result">83.</p>
+					</li>
+					<li>
+						<h4 class="race-date">15.&ndash;16.05.</h4>
+						<h5 class="race-location">Heubach</h5>
+						<h6 class="race-title">Bike the Rock <a href="http://www.biketherock.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result">15.</p>
+					</li>
+					<li>
+						<h4 class="race-date">22.&ndash;23.05.</h4>
+						<h5 class="race-location">Offenburg</h5>
+						<h6 class="race-title">Mountain Bike World Cup <a href="http://www.worldcup-offenburg.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result">100.</p>
+					</li>
+				</ul>
+				
+				<h3>Juni</h3>
+				<ul>
+					<li>
+						<h4 class="race-date">12.&ndash;13.06.</h4>
+						<h5 class="race-location">Albstadt</h5>
+						<h6 class="race-title">Albstadt MTB Classic <a href="http://www.albstadt-mtb-classic.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result medal fin1st">1.</p>
+					</li>
+					<li>
+						<h4 class="race-date">18.&ndash;20.06.</h4>
+						<h5 class="race-location">Kirchzarten</h5>
+						<h6 class="race-title">Black Forest ULTRA Bike Marathon <a href="http://www.ultra-bike.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result medal fin2nd">2.</p>
+					</li>
+				</ul>
+
+				<h3>Juli</h3>
+				<ul>
+					<li>
+						<h4 class="race-date">03.07.</h4>
+						<h5 class="race-location">Wetter (Ruhr)</h5>
+						<h6 class="race-title">Ruhrbike-Festival 2010 <a href="http://www.ruhrbike-festival.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result medal fin1st">1.</p>
+					</li>
+					<li>
+						<h4 class="race-date">17.&ndash;18.07.</h4>
+						<h5 class="race-location">Bad Salzdetfurth</h5>
+						<h6 class="race-title">Deutsche Meisterschaften 2010 MTB Cross-Country <a href="http://mtb.bad-salzdetfurth.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result medal fin3rd">3.</p>
+					</li>
+				</ul>
+
+			</div>
+
+			<div class="calendar-months" id="schedule_2008">
+
+				<h2>2008</h2>
+				
+				<h3>Juni</h3>
+				<ul>
+					<li>
+						<h4 class="race-date">12.&ndash;13.06.</h4>
+						<h5 class="race-location">Albstadt</h5>
+						<h6 class="race-title">Albstadt MTB Classic <a href="http://www.albstadt-mtb-classic.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result medal fin1st">1.</p>
+					</li>
+					<li>
+						<h4 class="race-date">18.&ndash;20.06.</h4>
+						<h5 class="race-location">Kirchzarten</h5>
+						<h6 class="race-title">Black Forest ULTRA Bike Marathon <a href="http://www.ultra-bike.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result medal fin2nd">2.</p>
+					</li>
+				</ul>
+
+				<h3>Juli</h3>
+				<ul>
+					<li>
+						<h4 class="race-date">03.07.</h4>
+						<h5 class="race-location">Wetter (Ruhr)</h5>
+						<h6 class="race-title">Ruhrbike-Festival 2010 <a href="http://www.ruhrbike-festival.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result medal fin1st">1.</p>
+					</li>
+					<li>
+						<h4 class="race-date">17.&ndash;18.07.</h4>
+						<h5 class="race-location">Bad Salzdetfurth</h5>
+						<h6 class="race-title">Deutsche Meisterschaften 2010 MTB Cross-Country <a href="http://mtb.bad-salzdetfurth.de/">Url</a></h6>
+						<!-- <p class="race-desc"></p> -->
+						<p class="race-result medal fin3rd">3.</p>
+					</li>
+				</ul>
+
+			</div>
+
 		</div>
 
 	</div>

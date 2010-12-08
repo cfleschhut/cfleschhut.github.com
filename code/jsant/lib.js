@@ -60,12 +60,27 @@ function getOrdinal(n) {
 
 /* === STRINGS === */
 
-
+// Testing whether a String Contains Only Numeric Data
+function isNumeric(str) {
+	var pattern = /^-?\d+(\.\d+)?$/;
+	return pattern.test(str);
+}
 
 
 /* === ARRAYS === */
 
-
+function unique(origArr) {
+	var newArr = [];
+	var found;
+	for(var i=0; i<origArr.length; i++) {
+		found = undefined;
+		for(var j=0; j<newArr.length; j++) {
+			if (origArr[i] === newArr[j]) { found = true; }
+		}
+		if (!found) { newArr.push(origArr[i]); }
+	}
+	return newArr;
+}
 
 
 /* === DATES & TIME === */
