@@ -1,0 +1,88 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN"
+"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>Flickr API Test</title>
+<style type="text/css" media="screen">
+
+body {
+	margin: 0;
+	padding: 0;
+	background: #000;
+}
+
+div#flickrPics {
+	width: 395px;
+	height: 395px;
+	background: url(ajax-loader.gif) no-repeat 50% 50%;
+	position: absolute;
+	top: 50%;
+	left: 50%;
+	margin: -198px 0 0 -198px;
+}
+div#flickrPics ol {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+div#flickrPics ol a {
+	display: block;
+	float: left;
+	margin: 2px 2px;
+}
+div#flickrPics ol a:hover {
+	border: 1px solid #fc0;
+	margin: 0;
+	padding: 1px 1px;
+}
+div#flickrPics ol a img {
+	border: none;
+	display: block;
+}
+
+</style>
+<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/prototype/1/prototype.js"></script> -->
+<!-- <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.4/jquery.js"></script> -->
+<script type="text/javascript">
+/* <![CDATA[ */
+
+// document.observe("dom:loaded", function() {
+// 
+// 
+// 
+// });
+
+function jsonFlickrFeed(data) {
+	// console.log(data);
+}
+function jsonFlickrApi(data) {
+	var div = document.getElementById("flickrPics");
+	var list = "<ol>";
+	for(var i=0; i<data.photos.photo.length; i++) {
+		// console.log(data.photos.photo[i]);
+		var farm = data.photos.photo[i].farm;
+		var server = data.photos.photo[i].server;
+		var owner = data.photos.photo[i].owner;
+		var id = data.photos.photo[i].id;
+		var secret = data.photos.photo[i].secret;
+		var size = "s";
+		var title = data.photos.photo[i].title;
+		list += '<li><a href="http://www.flickr.com/photos/' + owner + '/' + id +'"><img src="http://farm' + farm + '.static.flickr.com/' + server + '/' + id + '_' + secret + '_' + size + '.jpg" title="' + title + '" /></a></li>';
+	}
+	list += "</ol>";
+	div.innerHTML = list;
+}
+
+/* ]]> */
+</script>
+</head>
+
+<body>
+
+<div id="flickrPics"></div>
+
+<!-- <script type="text/javascript" src="http://api.flickr.com/services/feeds/photos_public.gne?format=json&id=70603505@N00"></script> -->
+<script type="text/javascript" src="http://api.flickr.com/services/rest/?method=flickr.photos.search&amp;format=json&amp;per_page=25&amp;user_id=47095040@N00&amp;sort=interestingness-desc&amp;api_key=ad0a3bf3436106f96858d5c7baa320bb"></script>
+</body>
+</html>
