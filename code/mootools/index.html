@@ -9,14 +9,17 @@
 
 window.addEvent("domready", function() {
 
-	var boxAnim = new Fx.Tween("box");
-	boxAnim.start("margin-left", 100).chain(
-		function() { this.start("width", 100); },
-		function() { this.start("opacity", 0); },
-		function() { this.start("opacity", 1); },
-		function() { this.start("width", 50); },
-		function() { this.start("margin-left", 0); }
-	);
+	var box = $("box");
+	var boxAnim = new Fx.Tween(box);
+	box.addEvent("click", function() {
+		boxAnim.start("margin-left", 100).chain(
+			function() { this.start("width", 100); },
+			function() { this.start("opacity", 0); },
+			function() { this.start("opacity", 1); },
+			function() { this.start("width", 50); },
+			function() { this.start("margin-left", 0); }
+		);
+	});
 
 });
 
