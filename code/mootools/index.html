@@ -6,11 +6,15 @@
 <title>MooTools Beginner’s Guide</title>
 <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/mootools/1.3/mootools.js"></script>
 <script type="text/javascript">
+<!--
 
 window.addEvent("domready", function() {
 
 	var box = $("box");
-	var boxAnim = new Fx.Tween(box);
+	var boxAnim = new Fx.Tween(box, {
+		duration: 500,
+		transition: Fx.Transitions.Quart.easeOut
+	});
 	box.addEvent("click", function() {
 		boxAnim.start("margin-left", 100).chain(
 			function() { this.start("width", 100); },
@@ -20,17 +24,74 @@ window.addEvent("domready", function() {
 			function() { this.start("margin-left", 0); }
 		);
 	});
+	
+	$$("table tr:even").setStyle("background-color", "#eee");
+	$$("table tr:odd").setStyles({
+		"background-color": "#333",
+		"color": "#fff"
+	});
+	
+	$$("a[href=http://mywebsite.com]").setStyle("color", "green");
+	$$("a[href!=http://mywebsite.com]").setStyle("color", "red");
+	$$("a[href^=mailto]").setStyles({
+		"text-decoration": "none",
+		"border-bottom": "1px dashed red",
+		"background-color": "lightblue"
+	});
+	$$("a[href$=.zip]").setStyles({
+		"text-decoration": "none",
+		"padding": "2px",
+		"border": "1px solid #000"
+	});
 
 });
 
+//-->
 </script>
 </head>
 
 <body>
 
-<div id="box" style="background: #00f; width: 50px; height: 50px;">
-	
-</div>
+<div id="box" style="background: #00f; width: 50px; height: 50px;"></div>
+
+<table>
+	<tr>
+		<th>Rank</th>
+		<th>Movie</th>
+		<th>Genre</th>
+	</tr>
+	<tr>
+		<td>1</td>
+		<td>The Matrix</td>
+		<td>Action</td>
+	</tr>
+	<tr>
+		<td>2</td>
+		<td>Die Hard</td>
+		<td>Action</td>
+	</tr>
+	<tr>
+		<td>3</td>
+		<td>The Dark Knight</td>
+		<td>Action</td>
+	</tr>
+	<tr>
+		<td>4</td>
+		<td>Friday</td>
+		<td>Comedy</td>
+	</tr>
+	<tr>
+		<td>5</td>
+		<td>Love Actually</td>
+		<td>Drama</td>
+	</tr>
+</table>
+
+<p>Go to the <a href="http://mywebsite.com">home page</a>.</p>
+<p><a href="http://mywebsite.com/about">This link</a> will not go to
+the home page.</p>
+<p>Please <a href="mailto:jacob@mywebsite.com">email me</a> or <a href="mailto:matt@mywebsite..com">email Matt</a>.</p>
+<p>Download this <a href="foo.zip">ZIP file</a>.</p>
 
 </body>
 </html>
