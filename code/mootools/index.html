@@ -25,25 +25,28 @@ window.addEvent("domready", function() {
 		);
 	});
 	
-	$$("table tr:even").setStyle("background-color", "#eee");
-	$$("table tr:odd").setStyles({
-		"background-color": "#333",
-		"color": "#fff"
-	});
+	var browserEngine = Browser.Engine.name || "Unknown",
+		browserEngineVersion = Browser.Engine.version || "Unknown";
+	$$("#browser-info li:first-child").appendText(browserEngine);
+	$$("#browser-info li:last-child").appendText(browserEngineVersion);
 	
-	$$("a[href=http://mywebsite.com]").setStyle("color", "green");
-	$$("a[href!=http://mywebsite.com]").setStyle("color", "red");
-	$$("a[href^=mailto]").setStyles({
-		"text-decoration": "none",
-		"border-bottom": "1px dashed red",
-		"background-color": "lightblue"
-	});
-	$$("a[href$=.zip]").setStyles({
-		"text-decoration": "none",
-		"padding": "2px",
-		"border": "1px solid #000"
-	});
-
+	// var startTime = $time();
+	// alert("Click on the OK button.");
+	// var endTime = $time();
+	// var totalTime = endTime - startTime;
+	// new Element("p", { text: "It took " + totalTime/1000 + " seconds for you to click the OK button." }).inject(document.body);
+	
+	var counter = 0;
+	var moveLeft = function() {
+		$("bluebox").tween("margin-left", (counter + 1) * 50);
+		$("bluebox").set("text", counter + 1);
+		counter++;
+		if (counter == 5) {
+			$clear(moving);
+		}
+	};
+	var moving = moveLeft.periodical(1000);
+	
 });
 
 //-->
@@ -54,44 +57,12 @@ window.addEvent("domready", function() {
 
 <div id="box" style="background: #00f; width: 50px; height: 50px;"></div>
 
-<table>
-	<tr>
-		<th>Rank</th>
-		<th>Movie</th>
-		<th>Genre</th>
-	</tr>
-	<tr>
-		<td>1</td>
-		<td>The Matrix</td>
-		<td>Action</td>
-	</tr>
-	<tr>
-		<td>2</td>
-		<td>Die Hard</td>
-		<td>Action</td>
-	</tr>
-	<tr>
-		<td>3</td>
-		<td>The Dark Knight</td>
-		<td>Action</td>
-	</tr>
-	<tr>
-		<td>4</td>
-		<td>Friday</td>
-		<td>Comedy</td>
-	</tr>
-	<tr>
-		<td>5</td>
-		<td>Love Actually</td>
-		<td>Drama</td>
-	</tr>
-</table>
+<div id="bluebox" style="background: #00f; width: 50px; height: 50px; text-align: center; line-height: 50px; color: #fff;"></div>
 
-<p>Go to the <a href="http://mywebsite.com">home page</a>.</p>
-<p><a href="http://mywebsite.com/about">This link</a> will not go to
-the home page.</p>
-<p>Please <a href="mailto:jacob@mywebsite.com">email me</a> or <a href="mailto:matt@mywebsite..com">email Matt</a>.</p>
-<p>Download this <a href="foo.zip">ZIP file</a>.</p>
+<ul id="browser-info">
+	<li>Rendering Engine: </li>
+	<li>Rendering Engine’s version: </li>
+</ul>
 
 </body>
 </html>
