@@ -5,45 +5,96 @@
 <title>JavaScript Anthology: Code Sandbox</title>
 <style>
 
-div#content {
-	width: 50px; height: 50px; background: #eee;
-	border: 5px solid yellow;
+div#btn {
+	width: 20px;
+	height: 20px;
+	background: tomato;
+	position: relative;
+	z-index: 2;
+	cursor: pointer;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
+}
+div#symbol {
+	font-size: 400px;
+	line-height: 1;
+	width: 100%;
+	height: 400px;
+	text-align: center;
+	color: #fff;
+	position: absolute;
+	top: 50%;
+	left: 0;
+	margin-top: -200px;
+	z-index: 1;
+	cursor: default;
 }
 
 </style>
 <script type="text/javascript" src="lib.js"></script>
 <script>
 
-function changeBorder(element, to) {
-	element.style.borderColor = to;
+function $(id) {
+	return document.getElementById(id);
 }
 
 function init() {
 	
-	var datePara = document.getElementById("date");
-	datePara.innerHTML = new Date().getDateString("%tag, %date. %monat %year");
+	// var date = document.createElement("div");
+	// date.setAttribute("id", "date");
+	// var currentDate = new Date().getDateString("%tag, %date. %monat %year");
+	// var date_str = document.createTextNode(currentDate);
+	// date.appendChild(date_str);
+	// // document.body.appendChild(date);
+	// document.body.insertBefore(date, document.body.firstChild);
 
-	var contentDiv = document.getElementById("content");
-	contentDiv.onmouseover = function() {
-		changeBorder(this, "red");
+
+	// var currentTarget = null;
+	// var previousTarget = null;
+	// document.onmousemove = function(e) {
+	// 	currentTarget = e.target;
+	// 	if (currentTarget != previousTarget) {
+	// 		console.log(currentTarget);
+	// 	}
+	// 	previousTarget = currentTarget;
+	// };
+	
+	var win_width = window.innerWidth,
+		win_height = window.innerHeight;
+	
+	var ratioX = win_width / 256,
+		ratioY = win_height / 256;
+	
+	var c1 = 0, c2 = 0,
+		c3 = randomBetween(0, 255);
+	
+	function colorize(elem, property, c1, c2, c3, invert) {
+		if (invert) {
+			elem.style[property] = "rgb(" + c3 + ", " + c2 + ", " + c1 + ")";
+		} else {
+			elem.style[property] = "rgb(" + c1 + ", " + c2 + ", " + c3 + ")";
+		}
+	}
+
+	$("btn").onclick = function() {
+
+		colorize(document.body, "backgroundColor", c1, c2, c3);
+		this.style.display = "none";
+		document.title = "Yay!";
+
+		document.onmousemove = function(e) {
+			// $("log").innerHTML = e.screenX + ", " + e.screenY;
+			// $("log").innerHTML = e.clientX + ", " + e.clientY;
+
+			c1 = Math.floor(e.clientX / ratioX);
+			c2 = Math.floor(e.clientY / ratioY);
+			colorize(document.body, "backgroundColor", c1, c2, c3);
+			colorize($("symbol"), "color", c1, c2, c3, true);
+		};
+
 	};
-	contentDiv.onmouseout = function() {
-		changeBorder(this, "");
-	};
-
-	// var test = document.getElementById("testdiv");
-	// var data = ["a", "b", "c"];
-	// var html = [];
-	// html.push("<ul>");
-	// for(var i=0; i<data.length; i++) {
-	// 	html.push("<li>" + i + ": " + data[i] + "</li>");
-	// }
-	// html.push("</ul>");
-	// test.innerHTML = html.join("");
-
-	// var arr = ["eins", "zwei", "drei", "eins", "zwei", "drei"];
-	// console.log(unique(arr));
-
+	
 }
 
 addLoadListener(init);
@@ -53,9 +104,10 @@ addLoadListener(init);
 
 <body>
 
-<p id="date"></p>
-<div id="content"></div>
-<div id="testdiv"></div>
+<div id="btn"></div>
+<div id="symbol">✌</div>
+
+<div id="log"></div>
 
 </body>
 </html>

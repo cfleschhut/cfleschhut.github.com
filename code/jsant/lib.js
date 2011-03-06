@@ -82,6 +82,20 @@ function unique(origArr) {
 	return newArr;
 }
 
+// Creating an Array of Arrays
+function iterateMatrix(arr) {
+	var html = '<table border="1">';
+	for(var i=0; i<arr.length; i++) {
+		html += "<tr>";
+		for(var j=0; j<arr[i].length; j++) {
+			html += "<td>" + arr[i][j] + "</td>";
+		}
+		html += "</tr>";
+	}
+	html += "</table>";
+	return html;
+}
+
 
 /* === DATES & TIME === */
 
