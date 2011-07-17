@@ -15,6 +15,22 @@ a.local-link {
 	background: #fff url(http://www.klauskomenda.com/wp-content/uploads/2007/10/ayui_m2/img/icon_external_link.gif) no-repeat;
 }
 
+ul#container {
+	margin: 0 auto;
+	padding: 0;
+	list-style: none;
+	width: 600px;
+	height: 450px;
+	border: 1px solid #ccc;
+	padding: 3px;
+}
+ul#container li {
+	float: left;
+}
+ul#container li img {
+	display: block;
+}
+
 </style>
 <script type="text/javascript" src="http://yui.yahooapis.com/2.9.0/build/yahoo-dom-event/yahoo-dom-event.js"></script>
 </head>
@@ -29,7 +45,21 @@ a.local-link {
 	<li>Marking <a href="http://orf.at/">a link to any other external resource</a></li>
 </ul>
 
+<ul id="container">
+    <li><img src="http://www.klauskomenda.com/wp-content/uploads/2007/12/img/connery_blur_01.gif" alt="James Bond puzzle piece 1"></li>
+    <li><img src="http://www.klauskomenda.com/wp-content/uploads/2007/12/img/connery_blur_02.gif" alt="James Bond puzzle piece 2"></li>
+    <li><img src="http://www.klauskomenda.com/wp-content/uploads/2007/12/img/connery_blur_03.gif" alt="James Bond puzzle piece 3"></li>
+    <li><img src="http://www.klauskomenda.com/wp-content/uploads/2007/12/img/connery_blur_04.gif" alt="James Bond puzzle piece 4"></li>
+    <li><img src="http://www.klauskomenda.com/wp-content/uploads/2007/12/img/connery_blur_05.gif" alt="James Bond puzzle piece 5"></li>
+    <li><img src="http://www.klauskomenda.com/wp-content/uploads/2007/12/img/connery_blur_06.gif" alt="James Bond puzzle piece 6"></li>
+    <li><img src="http://www.klauskomenda.com/wp-content/uploads/2007/12/img/connery_blur_07.gif" alt="James Bond puzzle piece 7"></li>
+    <li><img src="http://www.klauskomenda.com/wp-content/uploads/2007/12/img/connery_blur_08.gif" alt="James Bond puzzle piece 8"></li>
+    <li><img src="http://www.klauskomenda.com/wp-content/uploads/2007/12/img/connery_blur_09.gif" alt="James Bond puzzle piece 9"></li>
+</ul>
+
 <script type="text/javascript">
+
+// Mission 1
 
 YAHOO.namespace("AgentYUI");
 YAHOO.AgentYUI.Mission1 = function() {
@@ -54,6 +84,9 @@ YAHOO.AgentYUI.Mission1 = function() {
 }();
 YAHOO.AgentYUI.Mission1.init();
 
+
+// Mission 2
+
 YAHOO.AgentYUI.Mission2 = function() {
 	var init = function() {
 		YAHOO.util.Dom.getElementsBy(formatLinks, "a");
@@ -72,6 +105,32 @@ YAHOO.AgentYUI.Mission2 = function() {
 	};
 }();
 YAHOO.AgentYUI.Mission2.init();
+
+
+// Mission 3
+
+YAHOO.AgentYUI.Mission3 = function() {
+	var imgArray, imgArrayLength;
+	var imgSwap = function(e) {
+		var imgEl = YAHOO.util.Event.getTarget(e);
+		console.log(imgEl);
+	};
+	var init = function() {
+		var imgContainerEl = YAHOO.util.Dom.get("container");
+		YAHOO.util.Event.addListener(imgContainerEl, "click", imgSwap);
+		var tmp = imgContainerEl.getElementsByTagName("img"),
+			imgArrayLength = tmp.length;
+		var imgArray = [];
+		for(var i=0; i<imgArrayLength; i++) {
+			imgArray.push(tmp[i]);
+		}
+		console.log(imgArray);
+	};
+	return {
+		init: init
+	}
+}();
+YAHOO.AgentYUI.Mission3.init();
 
 </script>
 

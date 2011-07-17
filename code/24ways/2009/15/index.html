@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>24 Ways &ndash; 2009/15 | CSS Animations</title>
+<style>
+
+#spinner {
+  width: 24px;
+  height: 24px;
+/*  background: red url(img/spinner.png) no-repeat;*/
+  -webkit-mask-image: url(img/spinner.png);
+  background: #aaa;
+  -webkit-animation: spinnerRotate 1.5s infinite linear;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin: -12px 0 0 -12px;
+}
+
+@-webkit-keyframes spinnerRotate {
+  from {
+    -webkit-transform: rotate(0deg);
+  }
+  to {
+    -webkit-transform: rotate(360deg);
+  }
+}
+
+</style>
+</head>
+
+<body>
+
+<div id="spinner"></div>
+
+</body>
+</html>

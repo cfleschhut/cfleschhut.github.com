@@ -35,17 +35,18 @@ p#loading {
 	height: 100px;
 	margin: 0 auto;
 	background: url(img/jqm_loading.png) no-repeat 50% 50%;
-	text-indent: -9999px;
+/*  text-indent: -9999px;*/
 	-webkit-animation: spin 1.5s infinite linear;
+	-moz-animation: spin 1.5s infinite linear;
 }
 
 @-webkit-keyframes spin {
-	from {
-		-webkit-transform: rotate(0deg);
-	}
-	to {
-		-webkit-transform: rotate(360deg);
-	}
+	from { -webkit-transform: rotate(0deg); }
+	to { -webkit-transform: rotate(360deg); }
+}
+@-moz-keyframes spin {
+	from { -moz-transform: rotate(0deg); }
+	to { -moz-transform: rotate(360deg); }
 }
 
 ul#dailymile {
@@ -209,7 +210,7 @@ function getScript(url) {
 
 <div id="container">
 	<h1>Yay!</h1>
-	<p id="loading">loading</p>
+	<p id="loading"></p>
 </div>
 
 <script src="http://api.dailymile.com/people/christianf/entries.json?callback=dailymileCB"></script>
