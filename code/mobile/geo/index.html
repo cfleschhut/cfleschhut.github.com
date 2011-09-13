@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>t3n jQuery Mobile Geolocation</title>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="http://code.jquery.com/mobile/1.0b3/jquery.mobile-1.0b3.css" />
+<script src="http://code.jquery.com/jquery-1.6.2.js"></script>
+<script src="http://code.jquery.com/mobile/1.0b3/jquery.mobile-1.0b3.js"></script>
+<script type="text/javascript">
+
+$(window).ready(function() {
+  $("#btnEinchecken").click(function() {
+    navigator.geolocation.getCurrentPosition(geolocation_action, errors_action);
+  });
+});
+
+$("#letzterStandort").live("pageshow", function() {
+  if (localStorage.geodaten) {
+    $("#btnStandort").button("enable");
+    $("#btnStandort").click(storage_get);
+  }
+});
+
+var geodaten = [];
+
+function geolocation_action(position) {
+  // alert(position.coords.latitude);
+  var karte_url = "http://maps.google.com/maps/api/staticmap?sensor=true&center=" + position.coords.latitude + "," + position.coords.longitude + "zoom=15&size=290x250&markers=color:red|label:A|" + position.coords.latitude + "," + position.coords.longitude;
+  $("#karteAktuell").remove();
+  $("#karte").append($(document.createElement("img")).attr("src", karte_url).attr("id", "karteAktuell"));
+  
+  // localStorage.setItem("latitude", position.coords.latitude);
+  // localStorage.setItem("longitude", position.coords.longitude);
+  
+  geodaten.push({
+    latitude: position.coords.latitude,
+    longitude: position.coords.longitude
+  });
+  localStorage.setItem("geodaten", JSON.stringify(geodaten));
+}
+function errors_action(error) {
+  switch(error.code) {
+    case error.PERMISSION_DENIED:
+      alert("Der Nutzer möchte keine Daten teilen.");
+      break;
+    case error.POSITION_UNAVAILABLE:
+      alert("Die Geodaten sind nicht erreichbar.");
+      break;
+    case error.PERMISSION_DENIED:
+      alert("Timeout erhalten");
+      break;
+    default:
+      alert ("Unbekannter Error");
+      break;
+  }
+}
+
+function storage_get() {
+  var geo = JSON.parse(localStorage.geodaten);
+  var latitude = geo[geo.length - 1].latitude,
+    longitude = geo[geo.length - 1].longitude;
+  var karte_url = "http://maps.google.com/maps/api/staticmap?sensor=true&center=" + latitude + "," + longitude + "zoom=15&size=290x250&markers=color:red|label:A|" + latitude + "," + longitude;
+  $("#karteStand").remove();
+  $("#karteStandort").append($(document.createElement("img")).attr("src", karte_url).attr("id", "karteStand"));
+}
+
+</script>
+</head>
+
+<body>
+
+<div data-role="page" id="startseite">
+  <div data-role="header" data-position="fixed">
+    <h1>MyStandort</h1>
+  </div>
+  <div data-role="content">
+    <p>Hier können Sie ihren Standort einchecken. Viel Spaß dabei!</p>
+  </div>
+  <div data-role="footer" data-position="fixed">
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#startseite" class="ui-btn-active">Startseite</a></li>
+        <li><a href="#letzterStandort">Letzter Standort</a></li>
+        <li><a href="#einchecken">Einchecken</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div data-role="page" id="letzterStandort">
+  <div data-role="header" data-position="fixed">
+    <h1>MyStandort</h1>
+  </div>
+  <div data-role="content">
+    <h3>Lassen Sie sich ihren letzten Standort anzeigen:</h3>
+    <p><button id="btnStandort" disabled="disabled">Anzeigen</button></p>
+    <div id="karteStandort"></div>
+  </div>
+  <div data-role="footer" data-position="fixed">
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#startseite">Startseite</a></li>
+        <li><a href="#letzterStandort" class="ui-btn-active">Letzter Standort</a></li>
+        <li><a href="#einchecken">Einchecken</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+<div data-role="page" id="einchecken">
+  <div data-role="header" data-position="fixed">
+    <h1>MyStandort</h1>
+  </div>
+  <div data-role="content">
+    <h3>Checken Sie hier ihren derzeitigen Standort ein:</h3>
+    <p><button id="btnEinchecken">Einchecken</button></p>
+    <div id="karte"></div>
+  </div>
+  <div data-role="footer" data-position="fixed">
+    <div data-role="navbar">
+      <ul>
+        <li><a href="#startseite">Startseite</a></li>
+        <li><a href="#letzterStandort">Letzter Standort</a></li>
+        <li><a href="#einchecken" class="ui-btn-active">Einchecken</a></li>
+      </ul>
+    </div>
+  </div>
+</div>
+
+</body>
+</html>
