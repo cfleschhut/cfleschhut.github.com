@@ -2,7 +2,7 @@ var dm = {
   init: function(user) {
     this.username = user;
     this.url = 'http://api.dailymile.com/people/' + this.username + '/entries.json';
-    this.container = $('#container');
+    this.container = $('#dailymile');
 
     this.getEntries();
   },
@@ -20,7 +20,7 @@ var dm = {
   },
 
   removeLoading: function() {
-    var spinner = $('#loading');
+    var spinner = this.container.find('.loading');
     spinner.remove();
   },
 
@@ -35,15 +35,19 @@ var dm = {
     this.removeLoading();
 
     var list = [];
-    list.push('<ul id="dailymile">');
+    list.push('<ul class="dm-entries">');
 
     $(entries).each(function(index, entry) {
-      var workout = entry.workout;
-      var date = new Date(entry.at);
+      var workout = entry.workout,
+        url = entry.url,
+        date = new Date(entry.at);
 
       if (workout && workout.activity_type == 'Running' && workout.distance) {
         var title = workout.title;
-        var day = date.getDate(), month = date.getMonth() + 1, year = date.getFullYear(),
+
+        var day = date.getDate(),
+          month = date.getMonth() + 1,
+          year = date.getFullYear(),
           date_str = dm.toPaddedString(day) + '.' + dm.toPaddedString(month) + '.' + year;
 
         var dist = workout.distance,
@@ -53,12 +57,14 @@ var dm = {
         var distFull = 50,
           distPercent = (distValue / distFull) * 100;
 
-        list.push('<li>');
-        list.push('<h3>' + date_str + ' &middot; ' + title + '</h3>');
-        list.push('<p>');
-        list.push('<span style="width: ' + distPercent + '%"></span>');
-        list.push('<em>' + dist_str + '</em>');
+        list.push('<li class="dm-entry">');
+        list.push('<a href="' + url + '">');
+        list.push('<h3 class="dm-entry-title">' + date_str + ' &middot; ' + title + '</h3>');
+        list.push('<p class="progress">');
+        list.push('<span class="progress-bar" style="width: ' + distPercent + '%"></span>');
+        list.push('<em class="dm-entry-distance">' + dist_str + '</em>');
         list.push('</p>');
+        list.push('</a>');
         list.push('</li>');
       }
     });

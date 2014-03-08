@@ -1,0 +1,21 @@
+@include keyframes(spin) {
+  0% {
+    @include transform(rotate(0deg));
+  }
+  100% {
+    @include transform(rotate(360deg));
+  }
+}
+
+
+@include keyframes(pulse) {
+  0% {
+    box-shadow: 0 0 12px rgba(51, 204, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 12px rgba(51, 204, 255, 0.9);
+  }
+  100% {
+    box-shadow: 0 0 12px rgba(51, 204, 255, 0.2);
+  }
+}
