@@ -27,7 +27,6 @@ p#loading {
   height: 100px;
   margin: 0 auto;
   background: url(../img/jqm_loading.png) no-repeat 50% 50%;
-/*  text-indent: -9999px;*/
   -webkit-animation: spin 1.5s infinite linear;
   -moz-animation: spin 1.5s infinite linear;
 }
@@ -58,11 +57,12 @@ ul#dailymile h3 {
   padding: 0 15px;
 }
 ul#dailymile p {
+  position: relative;
   margin: 0;
   background: #e5e5e5;
   background-image: url(../img/progressbar_measurement_dark.png), -moz-linear-gradient(0 100% 90deg, #e5e5e5, #eee);
   background-image: url(../img/progressbar_measurement_dark.png), -webkit-gradient(linear, 0 100%, 0 0, from(#e5e5e5), to(#eee));
-  color: #fafafa;
+  color: #fff;
   text-align: right;
   text-shadow: 0 1px 1px rgba(0, 0, 0, 0.4);
   font-size: 14px;
@@ -76,7 +76,7 @@ ul#dailymile p {
 }
 ul#dailymile p span {
   display: block;
-  padding: 8px 0px;
+  height: 40px;
   background: purple;
   background-image: url(../img/progressbar_measurement_light.png), -moz-linear-gradient(0 100% 90deg, purple, #983c9e);
   background-image: url(../img/progressbar_measurement_light.png), -webkit-gradient(linear, 0 100%, 0 0, from(purple), to(#983c9e));
@@ -84,9 +84,10 @@ ul#dailymile p span {
   -webkit-border-radius: 20px;
   border-radius: 20px;
 }
-ul#dailymile p span em {
+ul#dailymile p em {
   font-style: normal;
-  position: relative;
+  position: absolute;
+  top: 10px;
   right: 15px;
 }
 p.more {
