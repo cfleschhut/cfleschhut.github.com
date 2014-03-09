@@ -25,6 +25,16 @@ module.exports = function(grunt) {
       }
     },
 
+    concat: {
+      dist: {
+        src: [
+          'bower_components/jquery/dist/jquery.min.js',
+          'js/main.min.js'
+        ],
+        dest: 'js/app.js'
+      }
+    },
+
     sass: {
       dist: {
         options: {
@@ -52,9 +62,10 @@ module.exports = function(grunt) {
 
   grunt.loadNpmTasks('grunt-contrib-jshint');
   grunt.loadNpmTasks('grunt-contrib-uglify');
+  grunt.loadNpmTasks('grunt-contrib-concat');
   grunt.loadNpmTasks('grunt-contrib-sass');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
-  grunt.registerTask('default', ['jshint', 'uglify', 'sass']);
+  grunt.registerTask('default', ['jshint', 'uglify', 'concat', 'sass']);
 
 };
