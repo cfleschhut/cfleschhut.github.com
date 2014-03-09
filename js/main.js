@@ -57,13 +57,18 @@ var dm = {
         var distFull = 50,
           distPercent = (distValue / distFull) * 100;
 
+        var duration = moment().startOf('day').seconds(workout.duration).format('H:mm:ss');
+
         list.push('<li class="dm-entry">');
         list.push('<a href="' + url + '">');
         list.push('<h3 class="dm-entry-title">' + date_str + ' &middot; ' + title + '</h3>');
-        list.push('<p class="progress">');
-        list.push('<span class="progress-bar" style="width: ' + distPercent + '%"></span>');
-        list.push('<em class="dm-entry-distance">' + dist_str + '</em>');
-        list.push('</p>');
+        list.push('<div class="progress">');
+        list.push('<div class="progress-bar" style="width: ' + distPercent + '%"></div>');
+        list.push('<div class="dm-entry-data">');
+        list.push('<span class="dm-entry-data-distance">' + dist_str + '</span>');
+        list.push('<span class="dm-entry-data-duration">' + duration + '</span>');
+        list.push('</div>');
+        list.push('</div>');
         list.push('</a>');
         list.push('</li>');
       }

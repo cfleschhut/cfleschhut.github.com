@@ -25,6 +25,7 @@
   "dependencies": {
     "bourbon": "~3.1.8",
     "jquery": "~2.1.0",
-    "backbone": "~1.1.2"
+    "backbone": "~1.1.2",
+    "moment": "~2.5.1"
   }
 }

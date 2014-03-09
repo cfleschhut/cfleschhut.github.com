@@ -153,17 +153,11 @@ a {
 }
 .dm-entry .progress {
   position: relative;
-  margin: 0;
   background: #e6e6e6;
   background-image: -webkit-linear-gradient( rgba(242, 242, 242, 0.25), rgba(217, 217, 217, 0.25)), -webkit-linear-gradient(-360deg, rgba(0, 0, 0, 0.1) 0, transparent 1px);
   background-image: linear-gradient( rgba(242, 242, 242, 0.25), rgba(217, 217, 217, 0.25)), linear-gradient(90deg, rgba(0, 0, 0, 0.1) 0, transparent 1px);
   background-size: 100%, 10%;
   box-shadow: 0 1px 2px rgba(0, 0, 0, 0.2);
-  color: #fff;
-  text-align: right;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
-  font-size: 15px;
-  letter-spacing: -1px;
   border-radius: 20px;
 }
 .dm-entry .progress .progress-bar {
@@ -175,11 +169,22 @@ a {
   background-image: linear-gradient(#ac39ac, #80007f);
   border-radius: 20px;
 }
-.dm-entry .progress .dm-entry-distance {
-  font-style: normal;
+.dm-entry .progress .dm-entry-data {
   position: absolute;
-  top: 9px;
+  top: 3px;
   right: 15px;
+  text-align: right;
+  color: #fff;
+  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
+  line-height: 1.2;
+}
+.dm-entry .progress .dm-entry-data .dm-entry-data-distance {
+  display: block;
+  font-size: 15px;
+  letter-spacing: -1px;
+}
+.dm-entry .progress .dm-entry-data .dm-entry-data-duration {
+  font-size: 13px;
 }
 
 /* More Btn */
