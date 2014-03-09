@@ -169,21 +169,29 @@ a {
   background-image: linear-gradient(#ac39ac, #80007f);
   border-radius: 20px;
 }
-.dm-entry .progress .dm-entry-data {
-  position: absolute;
-  top: 3px;
-  right: 15px;
-  text-align: right;
-  color: #fff;
-  text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
-  line-height: 1.2;
-}
 .dm-entry .progress .dm-entry-data .dm-entry-data-distance {
-  display: block;
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+  left: 15px;
+  color: #fff;
   font-size: 15px;
   letter-spacing: -1px;
 }
 .dm-entry .progress .dm-entry-data .dm-entry-data-duration {
+  position: absolute;
+  top: 50%;
+  -webkit-transform: translateY(-50%);
+  -moz-transform: translateY(-50%);
+  -ms-transform: translateY(-50%);
+  -o-transform: translateY(-50%);
+  transform: translateY(-50%);
+  right: 15px;
+  color: #999;
   font-size: 13px;
 }
 

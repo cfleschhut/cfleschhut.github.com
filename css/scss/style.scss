@@ -80,21 +80,20 @@ a {
     }
 
     .dm-entry-data {
-      position: absolute;
-      top: 3px;
-      right: 15px;
-      text-align: right;
-      color: #fff;
-      text-shadow: 1px 1px 1px rgba(0, 0, 0, 0.4);
-      line-height: 1.2;
-
       .dm-entry-data-distance {
-        display: block;
+        @include pos-valign-center;
+        left: 15px;
+        color: #fff;
         font-size: 15px;
+        // text-shadow: 0 1px 0 hsla(0, 0%, 20%, 0.8);
         letter-spacing: -1px;
       }
       .dm-entry-data-duration {
+        @include pos-valign-center;
+        right: 15px;
+        color: #999;
         font-size: 13px;
+        // text-shadow: 0 1px 0 hsla(0, 0%, 100%, 0.8);
       }
     }
   }
