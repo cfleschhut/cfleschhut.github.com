@@ -1,0 +1,38 @@
+.tabs {
+  display: table;
+  width: 100%;
+}
+
+.tabs__nav,
+.tabs__wrapper {
+  display: table-cell;
+  vertical-align: top;
+}
+
+.tabs__nav {
+  width: 30%;
+  background: hsl(0, 0%, 95%);
+}
+.tabs__nav--list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+.tabs__nav--link {
+  display: block;
+  margin: 0 0 1px;
+  padding: 10px 15px;
+  color: #999;
+  background: hsl(0, 0%, 90%);
+  text-decoration: none;
+  &:hover,
+  .is-active & {
+    color: #333;
+    background: hsl(0, 0%, 80%);
+  }
+}
+
+.tabs__wrapper {
+  width: 70%;
+  padding: 0 20px;
+}

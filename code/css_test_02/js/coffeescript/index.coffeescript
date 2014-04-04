@@ -1,0 +1,32 @@
+$.fn.tabify = (options) ->
+  this.each (i, el) ->
+    defaults =
+      container: $(this)
+      tabsItems: $(this).find('.tabs__item')
+
+    settings = $.extend(defaults, options)
+    
+    showCurrentTab = (ev) ->
+      ev.preventDefault()
+      href = $(this).attr('href')
+      tab = $(href)
+      highlightActiveLink(this)
+      hideAllTabs()
+      tab.show()
+    
+    hideAllTabs = ->
+      settings.tabsItems.hide()
+    
+    highlightActiveLink = (link) ->
+      link = $(link)
+      listItems = link.parent().siblings()
+      listItems.removeClass('is-active')
+      link.parent().addClass('is-active')
+
+    settings.container.on 'click.tabify', '> nav a', showCurrentTab
+
+    settings.container.find('nav a:first').trigger('click')
+
+$ ->
+  $('.tabs').tabify()
+  

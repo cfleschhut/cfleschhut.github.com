@@ -1,0 +1,87 @@
+.panel__switch {
+  display: none;
+}
+
+.panel__title {
+  display: block;
+  margin: 0 0 1px;
+  padding: 10px 15px;
+  color: hsl(0, 0%, 60%);
+  background: hsl(0, 0%, 90%);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+
+  .panel__switch:checked + & {
+    color: hsl(0, 0%, 40%);;
+    background: hsl(0, 0%, 95%);
+  }
+}
+
+.panel__body {
+  display: none;
+  padding: 0 15px;
+
+  .panel__switch:checked ~ & {
+    display: block;
+  }
+}
+
+@media screen and (min-width: 768px) {
+
+  @mixin tab-sizing($tab-count: 3) {
+    .panel__title {
+      width: percentage(1/$tab-count);
+    }
+
+    @for $i from 1 through $tab-count {
+     .panel:nth-child(#{$i}) .panel__title {
+       $index: $i - 1;
+       $pos: percentage($index/$tab-count);
+       left: $pos;
+     }
+    }
+  }
+
+  $tabs-count-range: 2, 3, 4, 5;
+  @each $tab-count in $tabs-count-range {
+    .panel-group-of-#{$tab-count} {
+      @include tab-sizing($tab-count);
+    }
+  }
+
+  .panel-group {
+    position: relative;
+  }
+
+  .panel__title {
+    position: absolute;
+    top: 0;
+    border-left: 1px solid #fff;
+    .panel:first-child & {
+      border-left: none;
+    }
+  }
+
+  .panel__body {
+    padding-top: 38px;
+  }
+}
+
+.widget {
+  margin: 0 15px;
+  padding: 15px 0;
+  border-bottom: 1px solid hsl(0, 0%, 90%);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+
+// Android/WebKit bug: pseudo-class + sibling selector
+// (css-tricks.com/webkit-sibling-bug)
+@-webkit-keyframes bugfix { from { padding: 0; } to { padding: 0; } }
+body { -webkit-animation: bugfix infinite 1s; }
+

@@ -1,0 +1,126 @@
+.panel__switch {
+  display: none;
+}
+
+.panel__title {
+  display: block;
+  margin: 0 0 1px;
+  padding: 10px 15px;
+  color: #999999;
+  background: #e6e6e6;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  cursor: pointer;
+}
+.panel__switch:checked + .panel__title {
+  color: #666666;
+  background: #f2f2f2;
+}
+
+.panel__body {
+  display: none;
+  padding: 0 15px;
+}
+.panel__switch:checked ~ .panel__body {
+  display: block;
+}
+
+@media screen and (min-width: 768px) {
+  .panel-group-of-2 .panel__title {
+    width: 50%;
+  }
+  .panel-group-of-2 .panel:nth-child(1) .panel__title {
+    left: 0%;
+  }
+  .panel-group-of-2 .panel:nth-child(2) .panel__title {
+    left: 50%;
+  }
+
+  .panel-group-of-3 .panel__title {
+    width: 33.33333%;
+  }
+  .panel-group-of-3 .panel:nth-child(1) .panel__title {
+    left: 0%;
+  }
+  .panel-group-of-3 .panel:nth-child(2) .panel__title {
+    left: 33.33333%;
+  }
+  .panel-group-of-3 .panel:nth-child(3) .panel__title {
+    left: 66.66667%;
+  }
+
+  .panel-group-of-4 .panel__title {
+    width: 25%;
+  }
+  .panel-group-of-4 .panel:nth-child(1) .panel__title {
+    left: 0%;
+  }
+  .panel-group-of-4 .panel:nth-child(2) .panel__title {
+    left: 25%;
+  }
+  .panel-group-of-4 .panel:nth-child(3) .panel__title {
+    left: 50%;
+  }
+  .panel-group-of-4 .panel:nth-child(4) .panel__title {
+    left: 75%;
+  }
+
+  .panel-group-of-5 .panel__title {
+    width: 20%;
+  }
+  .panel-group-of-5 .panel:nth-child(1) .panel__title {
+    left: 0%;
+  }
+  .panel-group-of-5 .panel:nth-child(2) .panel__title {
+    left: 20%;
+  }
+  .panel-group-of-5 .panel:nth-child(3) .panel__title {
+    left: 40%;
+  }
+  .panel-group-of-5 .panel:nth-child(4) .panel__title {
+    left: 60%;
+  }
+  .panel-group-of-5 .panel:nth-child(5) .panel__title {
+    left: 80%;
+  }
+
+  .panel-group {
+    position: relative;
+  }
+
+  .panel__title {
+    position: absolute;
+    top: 0;
+    border-left: 1px solid #fff;
+  }
+  .panel:first-child .panel__title {
+    border-left: none;
+  }
+
+  .panel__body {
+    padding-top: 38px;
+  }
+}
+.widget {
+  margin: 0 15px;
+  padding: 15px 0;
+  border-bottom: 1px solid #e6e6e6;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+@-webkit-keyframes bugfix {
+  from {
+    padding: 0;
+  }
+
+  to {
+    padding: 0;
+  }
+}
+body {
+  -webkit-animation: bugfix infinite 1s;
+}
